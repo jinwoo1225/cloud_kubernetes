@@ -1,11 +1,11 @@
 #bin/bash
-
+echo "swap off"
 sudo swapoff -a
 
 echo "install docker first"
 sudo apt-get update
 
-sudo apt-get install \
+sudo apt-get install -y\
     apt-transport-https \
     ca-certificates \
     curl \
@@ -21,13 +21,22 @@ echo \
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io 
 
-echo \
-`
-{
-"exec-opts": ["native.cgroupdriver=systemd"]
-}
-` | sudo tee /etc/docker/daemon.json > /dev/null
+# https://kubernetes.io/ko/docs/setup/production-environment/container-runtimes/
 
+cat <<EOF | sudo tee /etc/docker/daemon.json
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+
+sudo systemctl enable docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 
 
 echo "Letting iptables see bridged traffic"
@@ -41,9 +50,6 @@ net.bridge.bridge-nf-call-iptables = 1
 EOF
 
 sudo sysctl --system
-
-echo "!!!!! Disabling firewall !!!!!!!"
-sudo ufw disable
 
 echo "update apt and installl dependency"
 sudo apt-get update
