@@ -1,11 +1,11 @@
 #bin/bash
-
+echo "swap off"
 sudo swapoff -a
 
 echo "install docker first"
 sudo apt-get update
 
-sudo apt-get install \
+sudo apt-get install -y\
     apt-transport-https \
     ca-certificates \
     curl \
