@@ -2,7 +2,7 @@
 ---
 apiVersion: v1
 kind: PersistentVolume
-metaData:
+metadata:
   name: grafana-pv
   namespace: monitoring
 spec:
