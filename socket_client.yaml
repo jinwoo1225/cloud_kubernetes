@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socket-client
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: socket-client
+  template:
+    metadata:
+      labels:
+        app: socket-client
+    spec:
+      containers:
+      - name: socket-client
+        image: jinwoo17962/python-socket-client
+        env:
+          - name: HOST
+            value: socket-server-service
+          - name: PORT
+            value: "4000"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
