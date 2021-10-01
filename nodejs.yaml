@@ -12,14 +12,27 @@ spec:
         app: simple-webapp
     spec:
       containers:
-      - name: simple-webapp
+        - name: simple-webapp
           image: jinwoo17962/simple-webapp:latest
           env:
             - name: PORT
               value: "3000"
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 3000
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-webapp
+spec:
+  selector:
+    app: simple-webapp
+  ports:
+  - port: 3000
+    protocol: TCP
+  externalIPs:
+    - "192.168.1.26"
