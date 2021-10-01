@@ -13,7 +13,10 @@ spec:
     spec:
       containers:
       - name: simple-webapp
-        image: jinwoo17962/simple_webapp:latest
+          image: jinwoo17962/simple-webapp:latest
+          env:
+            - name: PORT
+              value: "3000"
         resources:
           limits:
             memory: "128Mi"
