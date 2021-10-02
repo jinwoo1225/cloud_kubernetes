@@ -1,0 +1,33 @@
+{
+  "name": "node_socket_client",
+  "version": "1.0.0",
+  "description": "TCP socket client",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build":"tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinwoo1225/cloud_kubernetes.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "socketio"
+  ],
+  "author": "jinwoo1225",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jinwoo1225/cloud_kubernetes/issues"
+  },
+  "homepage": "https://github.com/jinwoo1225/cloud_kubernetes#readme",
+  "dependencies": {
+    "socket.io-client": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.10.2",
+    "typescript": "^4.4.3"
+  }
+}
