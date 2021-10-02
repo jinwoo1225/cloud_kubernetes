@@ -13,7 +13,7 @@ spec:
     - ReadWriteOnce
   capacity:
     storage:  2Gi
-  # Retain : RVC가 삭제 되어도 데이터는 남음
+  # Retain : PVC가 삭제 되어도 데이터는 남음
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: /opt/grafana
