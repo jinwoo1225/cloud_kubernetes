@@ -20,6 +20,8 @@ spec:
             value: socket-server-service
           - name: PORT
             value: "4000"
+          - name: DELAY
+            value: "10"
         resources:
           limits:
             memory: "128Mi"
