@@ -4,6 +4,7 @@ import os
 
 HOST = os.environ.get("HOST") or socket.gethostname()
 PORT = os.environ.get("PORT") or "3000"
+DELAY = os.environ.get("DELAY") or "5"
 
 
 class Client:
@@ -19,7 +20,7 @@ class Client:
         )
 
     def send(self, data: str) -> None:
-        print("-" * 40)
+        print("-" * 40, self.socket.getsockname())
         print(f"connected : {HOST}:{PORT}")
         print(f"sending   : {data}")
         self.socket.send(data.encode())
@@ -36,4 +37,4 @@ if __name__ == '__main__':
 
     while True:
         c.send(str(dt.datetime.now()))
-        time.sleep(5)
+        time.sleep(int(DELAY))
