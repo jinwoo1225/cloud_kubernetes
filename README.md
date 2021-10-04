@@ -66,6 +66,7 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
   check : [simple-webapp](https://github.com/jinwoo1225/cloud_kubernetes/tree/master/simple_webapp)
 
 - build application as container (arch : `linux/amd64`, `linux/arch64`, `linux/arm/v7`) and push to `hub.docker.com`
+
   to build multi platform container check : [buildx](https://docs.docker.com/buildx/working-with-buildx/)
 
   Why I'm using it ? check : [meetup.toast](https://meetup.toast.com/posts/255)
