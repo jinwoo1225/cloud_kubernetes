@@ -12,6 +12,7 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
 ## week 1
 
 - install kubernetes on `ubuntu 20.04 LTS`  ([AMD64](https://github.com/jinwoo1225/cloud_kubernetes/blob/master/install_kubernetes_ubuntu_amd64.sh), [ARM64](https://github.com/jinwoo1225/cloud_kubernetes/blob/master/install_kubernetes_ubuntu_arm64.sh))
+
   bcz im using m1 mac 🤣
 
 - creating kubernetes cluster 
@@ -41,6 +42,7 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
   
 
 - deploy `grafana`
+
   if you are deploying it to Master Node, you should untaint it
 
   ```bash
@@ -50,6 +52,7 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
   
 
 - (advanced) deploy `grafana` with `service`, `persistent volume(PV)`, `persistent volume claim(PVC)` 
+
   check : [grafana.yaml](https://github.com/jinwoo1225/cloud_kubernetes/blob/master/grafana.yaml)
 
 - (advanced) access `grafana` dashboard
@@ -63,6 +66,7 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
 ## week 2
 
 - create simple nodejs application
+
   check : [simple-webapp](https://github.com/jinwoo1225/cloud_kubernetes/tree/master/simple_webapp)
 
 - build application as container (arch : `linux/amd64`, `linux/arch64`, `linux/arm/v7`) and push to `hub.docker.com`
@@ -77,6 +81,7 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
   ```
 
 - deploy application to kubernetes cluster
+
   check : [nodejs.yaml](https://github.com/jinwoo1225/cloud_kubernetes/blob/master/nodejs.yaml)
 
 - (Advanced)
@@ -84,9 +89,11 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
   - create simple socket transaction program for cluster
 
     - check : [python-socket-client](https://github.com/jinwoo1225/cloud_kubernetes/tree/master/python_socket_client)
+
       it will create replica of 4 and send signal to server
 
     - check : [python-socket-server](https://github.com/jinwoo1225/cloud_kubernetes/tree/master/python_socket_server)
+
       it will create thread to each client, and send `success` to each valid request
 
   - build it, push it, deploy it, test it
