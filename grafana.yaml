@@ -48,9 +48,16 @@ spec:
     spec:
       securityContext:
       # https://grafana.com/docs/grafana/latest/installation/docker/#migrate-to-v51-or-later
-        fsGroup: 0  
-        runAsGroup: 0
-        runAsUser: 472
+        fsGroup: 472
+        supplementalGroups:
+          - 0
+      initContainers:
+        - name: grafana-data-permission-fix
+          image: busybox
+          command: ["/bin/chmod", "-R", "777", "/data"]
+          volumeMounts:
+            - name: grafana-pv
+              mountPath: /data
       containers:
         - name: grafana
           image: grafana/grafana:latest
