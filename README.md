@@ -77,7 +77,7 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
 
   ```bash
   # this command will build simple webapp to support amd64, arm64, armv7 and push to hub.docker.com
-  sudo docker buildx build --platform=linux/amd64, linux/amd64, linux/arm/v7 -t jinwoo17962/simple-webapp ./simple_webapp --push
+  sudo docker buildx build --platform=linux/amd64,linux/amd64,linux/arm/v7 -t jinwoo17962/simple-webapp ./simple_webapp --push
   ```
 
 - deploy application to kubernetes cluster
@@ -99,9 +99,9 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
   - build it, push it, deploy it, test it
 
     ```bash
-    sudo docker buildx build --platform=linux/amd64, linux/amd64, linux/arm/v7 -t jinwoo17962/python-socket-client ./python_socket_client --push
+    sudo docker buildx build --platform=linux/amd64,linux/amd64,linux/arm/v7 -t jinwoo17962/python-socket-client ./python_socket_client --push
     
-    sudo docker buildx build --platform=linux/amd64, linux/amd64, linux/arm/v7 -t jinwoo17962/python-socket-server ./python_socket_server --push
+    sudo docker buildx build --platform=linux/amd64,linux/amd64,linux/arm/v7 -t jinwoo17962/python-socket-server ./python_socket_server --push
     
     kubectl apply -f socket_client.yaml
     
