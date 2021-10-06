@@ -1,4 +1,4 @@
-#bin/bash
+#!/bin/bash
 echo "swap off"
 sudo swapoff -a
 
