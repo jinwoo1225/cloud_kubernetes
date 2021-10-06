@@ -13,6 +13,13 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
 
 - install kubernetes on `ubuntu 20.04 LTS`  ([AMD64](https://github.com/jinwoo1225/cloud_kubernetes/blob/master/install_kubernetes_ubuntu_amd64.sh), [ARM64](https://github.com/jinwoo1225/cloud_kubernetes/blob/master/install_kubernetes_ubuntu_arm64.sh))
 
+  ```bash
+  # amd64 arch machine
+  bash ./install_kubernetes_ubuntu_amd64.sh
+
+  # arm64 arch machine
+  bash ./install_kubernetes_ubuntu_arm64.sh
+  ```
   bcz im using m1 mac 🤣
 
 - creating kubernetes cluster 
