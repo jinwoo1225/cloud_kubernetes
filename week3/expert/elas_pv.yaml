@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elas-pv
+  namespace: logging-elas
+spec:
+  capacity:
+    storage: 11Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: elas-volume
+  hostPath:
+    path: /opt/elasticsearch
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elas-pvc
+  namespace: logging-elas
+spec:
+  storageClassName: elas-volume
+  resources:
+    requests:
+      storage: 11Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
