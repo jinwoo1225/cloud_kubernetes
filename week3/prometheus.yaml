@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: monitoring-prom
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: prometheus-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: prometheus-pvc
+      initContainers:
+        - name: prom-data-permissionfix
+          image: busybox
+          command: ["/bin/chmod", "-R", "777", "/data"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      containers:
+        - name: prometheus
+          image: prom/prometheus:latest
+          # https://prometheus.io/docs/prometheus/latest/storage/#operational-aspects
+          args:
+            - "--config.file=/etc/prometheus/prometheus-settings.yaml"
+            - "--storage.tsdb.path=/prometheus"
+            - "--storage.tsdb.retention.time=6h"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - mountPath: /etc/prometheus
+              name: config
+            - mountPath: /prometheus
+              name: data
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-svc
+  namespace: monitoring-prom
+spec:
+  externalIPs:
+    - "192.168.1.11"
+  selector:
+    app: prometheus
+  ports:
+    - port: 9090

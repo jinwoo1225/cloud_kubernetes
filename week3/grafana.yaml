@@ -1,0 +1,121 @@
+# https://grafana.com/docs/grafana/latest/installation/kubernetes/
+---
+# PV가 있어야함!
+# https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: grafana-pv
+  namespace: monitoring-prom
+spec:
+  storageClassName: grafana
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage:  2Gi
+  # Retain : PVC가 삭제 되어도 데이터는 남음
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /opt/grafana
+    type : DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pvc
+  namespace: monitoring-prom
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: grafana
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: grafana
+  name: grafana
+  namespace: monitoring-prom
+spec:
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      securityContext:
+      # https://grafana.com/docs/grafana/latest/installation/docker/#migrate-to-v51-or-later
+        fsGroup: 472
+        supplementalGroups:
+          - 0
+      initContainers:
+        - name: grafana-data-permission-fix
+          image: busybox
+          command: ["/bin/chmod", "-R", "777", "/data"]
+          volumeMounts:
+            - name: grafana-pv
+              mountPath: /data
+      containers:
+        - name: grafana
+          image: grafana/grafana:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+              name: http-grafana
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /robots.txt
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 2
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 3000
+            timeoutSeconds: 1
+          resources:
+            # 요구사항
+            requests:
+              cpu: "250m"
+              memory: "750Mi"
+            # 제한사항
+            limits:
+              cpu: "500m"
+              memory: "1.5Gi"
+          volumeMounts:
+            - mountPath: /var/lib/grafana
+              name: grafana-pv
+      volumes:
+        - name: grafana-pv
+          persistentVolumeClaim:
+            claimName: grafana-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring-prom
+spec:
+  selector:
+    app: grafana
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: http-grafana
+  sessionAffinity: None
+  externalIPs:
+    - "192.168.1.11"
