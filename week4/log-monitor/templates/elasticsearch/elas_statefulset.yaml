@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: {{ .Values.elasticsearch.name }}-cluster
 spec:
-  serviceName: {{ .Values.elasticsearch.name }}-service
+  serviceName: {{ .Values.elasticsearch.name }}
   selector:
     matchLabels:
       app: {{ .Values.elasticsearch.name }}
@@ -57,7 +57,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: discovery.seed_hosts
-              value: "{{ .Values.elasticsearch.name}}-cluster-0.{{ .Values.elasticsearch.name}}-service"
+              value: "{{ .Values.elasticsearch.name}}-cluster-0.{{ .Values.elasticsearch.name}}"
             - name: cluster.initial_master_nodes
               value: "{{ .Values.elasticsearch.name}}-cluster-0"
             - name: ES_JAVA_OPTS

@@ -20,7 +20,7 @@ elasticsearch:
     tag: 7.14.1
   volume:
     name: elasticsearch-vol
-    storage: 1Gi
+    storage: 2Gi
     hostPath:
       path: /opt/elasticsearch
       type: DirectoryOrCreate
