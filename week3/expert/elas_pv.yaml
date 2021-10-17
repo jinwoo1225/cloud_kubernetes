@@ -24,7 +24,7 @@ spec:
   storageClassName: elas-volume
   resources:
     requests:
-      storage: 11Gi
+      storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
