@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.elasticSearch.volume.name }}
+spec:
+  storageClassName: {{ .Values.elasticSearch.volume.storageClassName }}
+  resources:
+    requests:
+      storage: {{ .Values.elasticSearch.volume.storage }}
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
