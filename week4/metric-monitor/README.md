@@ -11,12 +11,12 @@ You must using `--namespace` flag to ensure to deploy serviceAccount!
 ```bash
 helm install metric-monitor . --namespace metric
 
-kubectl port-foward -n metric 3000:3000 
+kubectl port-foward -n metric POD_NAME 3000:3000 
 ```
 
 ```bash
 # if you want to use externalIP without using port-foward strategy
-helm install metric-monitor . --namespace metric --set grafana.externalIP="192.168.1.11" prometheus.externalIP="192.168.1.11"
+helm install metric-monitor . --namespace metric --set-string grafana.externalIP="192.168.1.11" prometheus.externalIP="192.168.1.11"
 ```
 
 
@@ -49,7 +49,7 @@ you can use set option to modify values
 
 ```bash	
 # example : setting externalIP to grafana service
-helm install metric-monitor . --namespace metric --set grafana.externalIP="192.168.1.11" prometheus.externalIP="192.168.1.11"
+helm install metric-monitor . --namespace metric --set-string grafana.externalIP="192.168.1.11" prometheus.externalIP="192.168.1.11"
 ```
 
 **grafana value**
