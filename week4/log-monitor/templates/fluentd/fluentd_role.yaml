@@ -25,6 +25,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.fluentd.name }}
+  name: default
   namespace: {{ .Release.Namespace }}
 ---

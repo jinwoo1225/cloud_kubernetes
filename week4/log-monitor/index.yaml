@@ -3,12 +3,15 @@ entries:
   log-monitor:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-10-17T16:43:45.540547843+09:00"
-    description: A Helm chart for Kubernetes
-    digest: 6b935d3d7be439df21be0e1aeb163683008955967d468ea7fc495c389de58043
+    created: "2021-10-17T16:52:26.66751041+09:00"
+    description: A Log Monitoring System for Kubernetes
+    digest: 44a89a62784f722ba22b6a95a0b952e593582396ef8825087828b1d97e0f4df0
+    maintainers:
+    - email: jinwoo17962@icloud.com
+      name: Hong Jinwoo
     name: log-monitor
     type: application
     urls:
-    - log-monitor-0.1.0.tgz
-    version: 0.1.0
-generated: "2021-10-17T16:43:45.53894039+09:00"
+    - log-monitor-0.0.1.tgz
+    version: 0.0.1
+generated: "2021-10-17T16:52:26.665667249+09:00"

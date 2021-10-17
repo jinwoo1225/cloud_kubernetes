@@ -13,8 +13,6 @@ spec:
       labels:
         app: {{ .Values.fluentd.name }}
     spec:
-      serviceAccount: {{ .Values.fluentd.name }}
-      serviceAccountName: {{ .Values.fluentd.name }}
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
