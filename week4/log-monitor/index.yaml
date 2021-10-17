@@ -3,12 +3,12 @@ entries:
   log-monitor:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-10-17T15:27:21.293261927+09:00"
+    created: "2021-10-17T16:43:45.540547843+09:00"
     description: A Helm chart for Kubernetes
-    digest: f909b3c756464ad5caf172229bc0891aa94bb49f1305c8b1f1226a8f0fcc82f5
+    digest: 6b935d3d7be439df21be0e1aeb163683008955967d468ea7fc495c389de58043
     name: log-monitor
     type: application
     urls:
     - log-monitor-0.1.0.tgz
     version: 0.1.0
-generated: "2021-10-17T15:27:21.292335683+09:00"
+generated: "2021-10-17T16:43:45.53894039+09:00"
