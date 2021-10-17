@@ -6,7 +6,7 @@ spec:
   type: {{ .Values.prometheus.service.type}}
 
   {{- if .Values.prometheus.externalIP }}
-  annotations:
+  externalIPs:
   {{ toYaml .Values.prometheus.externalIP | indent 4 }}
   {{- end }}
   selector:
