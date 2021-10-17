@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.elasticSearch.volume.name }}
+  name: {{ .Values.elasticsearch.volume.name }}
 spec:
   capacity:
-    storage: {{ .Values.elasticSearch.volume.storage }}
+    storage: {{ .Values.elasticsearch.volume.storage }}
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: {{ .Values.elasticSearch.volume.storageClassName }}
+  storageClassName: {{ .Values.elasticsearch.volume.storageClassName }}
   hostPath:
-    path: {{ .Values.elasticSearch.volume.hostPath.path }}
-    type: {{ .Values.elasticSearch.volume.hostPath.type }}
+    path: {{ .Values.elasticsearch.volume.hostPath.path }}
+    type: {{ .Values.elasticsearch.volume.hostPath.type }}
