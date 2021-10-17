@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.prometheus.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.prometheus.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.prometheus.name }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: {{ .Values.prometheus.config.name }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Values.prometheus.volume.name }}
+      initContainers:
+        - name: prom-data-permissionfix
+          image: busybox:1.34.0
+          command: ["/bin/chmod", "-R", "777", "/data"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      containers:
+        - name: {{ .Values.prometheus.name }}
+          image: "{{ .Values.prometheus.image.repository }}:{{ .Values.prometheus.image.tag }}"   
+          args:
+              - "--config.file=/etc/prometheus/prometheus-settings.yaml"
+              - "--storage.tsdb.path=/prometheus"
+              - "--storage.tsdb.retention.time=6h"
+              - "--storage.tsdb.no-lockfile"
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - mountPath: /etc/prometheus
+              name: config
+            - mountPath: /prometheus
+              name: data

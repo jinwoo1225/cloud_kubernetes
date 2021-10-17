@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.prometheus.volume.name }}
+spec:
+  storageClassName: {{ .Values.prometheus.volume.storageClassName }}
+  resources:
+    requests:
+      storage: {{ .Values.prometheus.volume.request }}
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce

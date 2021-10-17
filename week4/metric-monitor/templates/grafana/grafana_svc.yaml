@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.grafana.name }}
+  labels:
+    app: {{ .Values.grafana.name }}
+spec:
+  type: {{ .Values.grafana.service.type }}
+  {{- if .Values.grafana.externalIP }}
+  annotations:
+  {{ toYaml .Values.grafana.externalIP | indent 4 }}
+  {{- end }}
+  ports:
+  - port: {{ .Values.grafana.service.port }}
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: {{ .Values.grafana.name }}
