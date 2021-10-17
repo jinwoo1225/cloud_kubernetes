@@ -4,11 +4,42 @@
 
 replicaCount: 1
 
-image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+kibana:
+  name: kibana
+  externalIP: ""
+  image:
+    repository: docker.elastic.co/kibana/kibana
+    tag: 7.2.0
+  
+
+elasticSearch:
+  name: elasticSearch
+  externalIP: ""
+  image:
+    repository: docker.elastic.co/elasticsearch/elasticsearch
+    tag: 7.14.1
+  volume:
+    name: elasticSearch-vol
+    storage: 1Gi
+    hostPath:
+      path: /opt/elasticsearch
+      type: DirectoryOrCreate
+    storageClassName: elasticsearcch
+    request: 1Gi
+  service:
+    type: ClusterIP
+    rest:  9200
+    inter: 9300
+
+fluentd:
+  name: fluentd
+  image:
+    repository: fluent/fluentd-kubernetes-daemonset
+    tag: v1.4.2-debian-elasticsearch-1.1
+
+
+
+
 
 imagePullSecrets: []
 nameOverride: ""
