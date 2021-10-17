@@ -5,7 +5,7 @@ metadata:
   namespace: logging-elas
 spec:
   capacity:
-    storage: 11Gi
+    storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
