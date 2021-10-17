@@ -8,7 +8,7 @@ spec:
   type: {{ .Values.grafana.service.type }}
   {{- if .Values.grafana.externalIP }}
   externalIPs:
-  {{ toYaml .Values.grafana.externalIP | indent 4 }}
+  - {{ toYaml  .Values.grafana.externalIP }}
   {{- end }}
   ports:
   - port: {{ .Values.grafana.service.port }}

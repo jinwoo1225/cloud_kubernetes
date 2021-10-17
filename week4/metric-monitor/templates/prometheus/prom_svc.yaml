@@ -7,7 +7,7 @@ spec:
 
   {{- if .Values.prometheus.externalIP }}
   externalIPs:
-  {{ toYaml .Values.prometheus.externalIP | indent 4 }}
+  - {{ toYaml .Values.prometheus.externalIP }}
   {{- end }}
   selector:
     app: {{ .Values.prometheus.name }}
