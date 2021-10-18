@@ -120,3 +120,113 @@ git clone https://github.com/jinwoo1225/cloud_kubernetes.git
 
     
 
+## week3
+
+Install `Prometheus`, `Node Exporter`, `Grafana` in my cluster. (namespace : `monitoring-prom`)
+
+### Create a  namespace
+
+create namespace object to simplify maintaining a applications.
+
+### Deploy Node Exporter
+
+deploy as daemonset to ensure every nodes have a single pod instance. 
+
+set `hostNetwork`, `hostIPC`,`hostPID`, `hostPath(as readonly)` to monitor node's metric.
+
+### Deploy Prometheus
+
+- Persistent Volume and Persistent Volume Claim
+  to store logs
+
+- ConfigMap
+  Use [Service Discovery](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config) to find every node that contains node-exporter
+
+- ClusterRole, ClusterRoleBinding, ServiceAccount
+  To use Service discovery (ClusterRole, ClusterRoleBinding)
+
+- Deployment, Service
+  https://prometheus.io/docs/prometheus/latest/getting_started/
+  `no-lockfile` option will help pods to rolling update
+  if not setted, two prometheus pod will get one storage and get **deadlocked** at that moment.
+
+  ```yaml
+  args:
+    - "--config.file=/etc/prometheus/prometheus-settings.yaml"
+    - "--storage.tsdb.path=/prometheus"
+  	- "--storage.tsdb.retention.time=6h"
+  	- "--storage.tsdb.no-lockfile"
+  ```
+
+### Deploy Grafana
+
+Using week1's grafana.yaml to install :)
+
+to add database you will have to use URL  `{prometheus-service name}:{portname}` to your Data Sources.
+
+example : `http://prometheus-svc:9090`
+
+### Deploy EFK
+
+#### Deploy Namespace
+
+- namespace : logging-elas
+
+#### Deploy Fluentd
+
+- ServiceAccount, ClusterRole, ClusterRoleBinding, Daemonset
+
+#### Deploy ElasticSearch
+
+- Namespace
+- Service
+- Persistent Volume, Persistent Volume Claim
+  You should not use Persistent Volume in production.
+  you should checkout **dynamic provisioing**
+- Stateful Set
+
+#### Deploy Kibana
+
+- Service
+- Deployment
+  should contain enviroment variable called `ELASTICSEARCH_URL` to be serviceURL ex) `elasticsearch-svc:9200`
+
+## week4
+
+### Install helm chart to your System
+
+```bash
+bash ./week4/install_helm_amd64.sh
+```
+
+### Metric Monitor(Node-Exporter, Prometheus, Grafana)
+
+create chart template
+
+```bash
+helm create metric-monitor
+```
+
+will create template and change the value in `values.yaml`
+
+create values for applications : [example](https://github.com/jinwoo1225/cloud_kubernetes/blob/master/week4/metric-monitor/values.yaml)
+
+```bash
+helm install metric-monitor . -n metric --create-namespace
+```
+
+- -n metric : use `metric` namespace
+- --create-namespace : create namespace if required namespace is not present.
+
+### Log Monitor(ElasticSearch, Flunetd, Kibana)
+
+```bash
+helm create log-monitor
+```
+
+```bash
+helm install log-monitor . -n logging --create-namespace
+```
+
+
+
