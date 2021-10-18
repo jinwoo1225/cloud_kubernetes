@@ -154,8 +154,8 @@ set `hostNetwork`, `hostIPC`,`hostPID`, `hostPath(as readonly)` to monitor node'
   args:
     - "--config.file=/etc/prometheus/prometheus-settings.yaml"
     - "--storage.tsdb.path=/prometheus"
-  	- "--storage.tsdb.retention.time=6h"
-  	- "--storage.tsdb.no-lockfile"
+    - "--storage.tsdb.retention.time=6h"
+    - "--storage.tsdb.no-lockfile"
   ```
 
 ### Deploy Grafana
